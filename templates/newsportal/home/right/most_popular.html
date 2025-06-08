@@ -1,0 +1,17 @@
+<div class="p-4 mb-3 bg-light rounded sidebar-widget shadow-sm">
+  <h4 class="fst-italic section-title">
+    <span>Most Popular</span>
+    {% for post in popular_posts %}
+  </h4>
+  <ul class="list-unstyled mb-0 popular-list">
+    <!-- Changed ol to ul for flexibility -->
+    <li>
+      <img src="{{ post.featured_image.url }}" alt="Popular 1" width="70" height="70" />
+      <div>
+        <a href="{% url 'post-detail' post.pk %}" class="popular-title-link">{{ post.title }}</a>
+        <p class="popular-description">{{ post.content|truncatechars:50 }}</p>
+      </div>
+    </li>
+  </ul>
+  {% endfor %}
+</div>

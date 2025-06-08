@@ -1,0 +1,23 @@
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+staticfiles/
+
+# Python
+*.py[cod]
+.Python
+env/
+venv/
+ENV/
+.venv/
+*.sqlite3
+
+# VS Code
+.vscode/
+
+# Environment variables
+.env

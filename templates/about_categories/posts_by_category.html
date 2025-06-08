@@ -1,0 +1,41 @@
+{% extends "newsportal/base.html" %}
+
+{% block content %}
+<!-- Main Content Area -->
+<div class="container mt-4">
+    <div class="row">
+        <!-- Article Content Section -->
+        <div class="col-lg-8">
+            <h2 class="mb-4">Posts in "{{ category.name }}"</h2>
+
+            {% if posts %}
+            {% for post in posts %}
+            <div class="mb-4">
+                {% if post.featured_image %}
+                <img src="{{ post.featured_image.url }}" class="img-fluid mb-3"
+                    style="max-height: 250px; width: 50%; object-fit: cover;" alt="{{ post.title }}">
+
+                {% endif %}
+                <h4><a href="{% url 'post-detail' post.id %}">{{ post.title }}</a></h4>
+                <p class="text-muted">{{ post.published_at|date:"F j, Y" }}</p>
+                <p>{{ post.content|truncatewords:30 }}</p>
+                <a href="{% url 'post-detail' post.id %}" class="btn btn-sm btn-primary">Read More</a>
+            </div>
+            <hr>
+            {% endfor %}
+            {% else %}
+            <p>No posts available in this category.</p>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar (Reused Structure) -->
+        <div class="col-lg-4">
+            <div class="position-sticky sticky-sidebar-offset">
+                {% include "newsportal/home/right/most_popular.html" %}
+                {% include "newsportal/home/right/advertisement.html" %}
+                {% include "newsportal/home/right/newsletter.html" %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
