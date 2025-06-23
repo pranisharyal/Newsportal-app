@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h2>Dashboard</h2>
+    <ul>
+      <li><a href="{% url 'tag-list' %}">Tags</a></li>
+      <li><a href="{% url 'category-list' %}">Categories</a></li>
+      <li><a href="{% url 'post-list' %}">Posts</a></li>
+    </ul>
+  </div>
+
+  <!-- Toggle Button -->
+  <button class="toggle-btn" id="toggle-btn">☰</button>
+
+  <!-- Main Content -->
+  <div class="main-content" id="main-content">
+    <header class="d-flex justify-content-between align-items-center">
+      <div>
+        <span>Manage Your Dashboard</span>
+      </div>
+      <div>
+        <a href="{% url 'home' %}" class="btn btn-outline-primary">🏠 Home</a>
+        <form action="#" method="post" style="display: inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-outline-danger">🚪 Logout</button>
+        </form>
+      </div>
+
+    </header>
+
+    <h2>Post List</h2>
+    <a href="{% url 'post-create' %}" class="btn btn-success">Add New Post</a>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Featured Image</th>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Tags</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>
+            {% if post.featured_image %}
+            <img src="{{ post.featured_image.url }}" alt="Featured Image" class="featured-image" style="height: 60px;">
+            {% else %}
+            <span>No Image</span>
+            {% endif %}
+          </td>
+          <td>{{ post.title }}</td>
+          <td>{{ post.category.name }}</td>
+          <td>
+            {% for tag in post.tag.all %}
+            {{ tag.name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </td>
+          <td>
+            <a href="{% url 'post-update' post.id %}" class="btn btn-success">Edit</a>
+            <a href="{% url 'post-delete' post.id %}" class="btn btn-danger">Delete</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="6">No posts available.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <script src="{% static 'js/dashboard.js' %}"></script>
+</body>
+
+</html>

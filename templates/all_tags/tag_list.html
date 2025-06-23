@@ -1,18 +1,19 @@
 {% extends "newsportal/base.html" %}
 
 {% block content %}
-  <div class="container mt-4">
-    <h2>All Tags</h2>
-    <ul>
-      {% for tag in tags %}
-        <li>
-          <a href="{% url 'posts_by_tag' tag.id %}">
-            {{ tag.name }}
-          </a>
-        </li>
-      {% empty %}
-        <li>No tags found.</li>
-      {% endfor %}
-    </ul>
+<!-- Main Content Area -->
+<div class="container mt-4 mb-5">
+  <h1 class="mb-4 section-title"><span>All Tags</span></h1>
+
+  <div class="p-4 rounded bg-light shadow-sm tag-cloud-container">
+    <!-- Use the existing .article-tags styling for consistency -->
+    {% for tag in tags %}
+    <div class="article-tags">
+        <a href="{% url 'posts_by_tag' tag.id %}">{{ tag.name }}</a>
+        <!-- Add more tags as needed -->
+        {% endfor %}
+    </div>
   </div>
+</div>
+
 {% endblock %}
